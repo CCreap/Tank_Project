@@ -13,6 +13,8 @@ namespace Complete
         public Color m_FullHealthColor = Color.green;       // Color of full health slider
         public Color m_ZeroHealthColor = Color.red;         // Color of 0 health slider
         public GameObject m_ExplosionPrefab;                // A prefab of explosion
+		public AudioClip HealClip;
+		public AudioSource HealAudioSource;
         
         private AudioSource m_ExplosionAudio;               // The audio source to play when the tank explodes
         private ParticleSystem m_ExplosionParticles;        // The particle system the will play when the tank is destroye
@@ -22,6 +24,7 @@ namespace Complete
 
         private void Awake ()
         {
+			HealAudioSource.enabled = false;
             // Instantiate the explosion prefab and get a reference to the particle system on it
             m_ExplosionParticles = Instantiate (m_ExplosionPrefab).GetComponent<ParticleSystem> ();
 
@@ -106,6 +109,7 @@ namespace Complete
 		//Heal the tank
 		void Heal()
 		{
+			HealAudioSource.enabled = true;
 			//If tank is below 75 health, add to current health 25
 			if (m_CurrentHealth < 75) 
 			{
@@ -120,6 +124,9 @@ namespace Complete
 				//Refresh UI
 				SetHealthUI ();
 			}
+
+			HealAudioSource.clip = HealClip;
+			HealAudioSource.Play ();
 
 		}
 
