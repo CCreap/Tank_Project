@@ -16,14 +16,18 @@ namespace Complete
         private Vector3 m_DesiredPosition;              // The position the camera is moving to
 
 
-
+        /// <summary>
+        /// Działa kiedy skrypt jest podłączony.
+        /// </summary>
         private void Awake ()
         {
 			//Get the refernce to camera
             m_Camera = GetComponentInChildren<Camera> ();
         }
 
-
+        /// <summary>
+        /// Działa każdą zafiksowaną klatkę.
+        /// </summary>
         private void FixedUpdate ()
         {
             // Move the camera towards a desired position.
@@ -33,7 +37,9 @@ namespace Complete
             Zoom ();
         }
 
-
+        /// <summary>
+        /// Rusza kamerę w oczekiwaną pozycję.
+        /// </summary>
         private void Move ()
         {
             // Find the average position of the targets.
@@ -43,7 +49,9 @@ namespace Complete
             transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
         }
 
-
+        /// <summary>
+        /// Znachodzi średnią pozycję pomiędzy celami.
+        /// </summary>
         private void FindAveragePosition ()
         {
             Vector3 averagePos = new Vector3 ();
@@ -72,15 +80,22 @@ namespace Complete
             m_DesiredPosition = averagePos;
         }
 
-
+        /// <summary>
+        /// Zmienia rozmiar kamery.
+        /// </summary>
         private void Zoom ()
         {
-            // Find the required size based on the desired position and smoothly transition to that size.
+            // Find the required size based on the desired position and smoothly changes to that size.
             float requiredSize = FindRequiredSize();
             m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
         }
 
-
+        /// <summary>
+        /// Znachodzi potrzebny rozmiar dla powiększenia kamery.
+        /// </summary>
+        /// <returns>
+        /// Jest to zmienna typu "float", która jest zwrocona dla wykorzystania w powiększeniu kamery.
+        /// </returns>
         private float FindRequiredSize ()
         {
             // Find the position the camera rig is moving towards in its local space.
@@ -118,7 +133,9 @@ namespace Complete
             return size;
         }
 
-
+        /// <summary>
+        /// Konfiguruje pozycję startową i rozmiar dla kamery.
+        /// </summary>
         public void SetStartPositionAndSize ()
         {
             // Find the desired position.

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Complete
 {
@@ -12,12 +12,20 @@ namespace Complete
         public float m_MaxLifeTime = 2f;                    // Time before destroying the shell
         public float m_ExplosionRadius = 5f;                // The maximum distance from the explosion tanks can be affected
 
+        /// <summary>
+        /// Niszczę obiekt po dwóch sekundach
+        /// </summary>
         private void Start ()
         {
             // If shell isn't destroyed, destroy it after 2 seconds after instantiating
             Destroy (gameObject, m_MaxLifeTime);
         }
 
+        /// <summary>
+        /// Przy kontakcie z trigerem tworze sferę dla pobrania wszystkich obiektów z pewnej maski
+        /// Niszcy obiekt przy kontakcie
+        /// </summary>
+        /// <param name="other"></param>
         private void OnTriggerEnter (Collider other)
         {
 			// Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius
@@ -67,7 +75,11 @@ namespace Complete
             Destroy (gameObject);
         }
 
-
+        /// <summary>
+        /// Licze ile punktów uszkodzenia musi być zwrócono w zależności od odleglości
+        /// </summary>
+        /// <param name="targetPosition">Przyjmuje pozycje we wspólrzędnych</param>
+        /// <returns>Zwraca punkty uszkodzenia</returns>
         private float CalculateDamage (Vector3 targetPosition)
         {
             // Create a vector from the shell to the target

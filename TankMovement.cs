@@ -4,6 +4,7 @@ namespace Complete
 {
     public class TankMovement : MonoBehaviour
     {
+
         public int m_PlayerNumber = 1;              // Used to identify which tank belongs to which player. Every tank has it's own control button based on player's number
         public float m_Speed = 12f;                 // Speed of tank
         public float m_TurnSpeed = 180f;            // How many degrees tank turns per second
@@ -11,21 +12,25 @@ namespace Complete
         public AudioClip m_EngineIdling;            // Audio to play when the tank isn't moving
         public AudioClip m_EngineDriving;           // Audio to play when the tank is moving
 		public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary
-
+        
         private string m_MovementAxisName;          // The name of the input axis for moving forward and back
         private string m_TurnAxisName;              // The name of the input axis for turning
         private Rigidbody m_Rigidbody;              // Reference used to move the tank
         private float m_MovementInputValue;         // The current value of the movement input
         private float m_TurnInputValue;             // The current value of the turn input
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene
-        private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
-
+        
+        /// <summary>
+        /// Pobiera component typu Rigidbody
+        /// </summary>
         private void Awake ()
         {
             m_Rigidbody = GetComponent<Rigidbody> ();
         }
 
-
+        /// <summary>
+        /// Przy aktywowaniu zeruje inputy, żeby uniknąć blędów
+        /// </summary>
         private void OnEnable ()
         {
             // When the tank is turned on, make sure it's not kinematic
@@ -39,31 +44,24 @@ namespace Complete
             // It is needed because we move the Tank when spawning it, and if the Particle System is playing while we do that
             // it "think" it move from (0,0,0) to the spawn point, creating a huge trail of smoke
 
-			/*
-            m_particleSystems = GetComponentsInChildren<ParticleSystem>();
-            for (int i = 0; i < m_particleSystems.Length; ++i)
-            {
-                m_particleSystems[i].Play();
-            }
-            */
+			
         }
 
-
+        /// <summary>
+        /// Przy wylączeniu obiektu, wylącz możlowość kontrolu.
+        /// </summary>
         private void OnDisable ()
         {
             // When the tank is turned off, set it to kinematic so it stops moving.
             m_Rigidbody.isKinematic = true;
 
             // Stop all particle system so it "reset" it's position to the actual one instead of thinking we moved when spawning
-            /*
-             * for(int i = 0; i < m_particleSystems.Length; ++i)
-            {
-                m_particleSystems[i].Stop();
-            }
-            */
+           
         }
 
-
+        /// <summary>
+        /// Na pocztku gry wskazuje na inputy;.
+        /// </summary>
         private void Start ()
         {
             // The axes names are based on player number
@@ -74,7 +72,9 @@ namespace Complete
             m_OriginalPitch = m_MovementAudio.pitch;
         }
 
-
+        /// <summary>
+        /// Caly czas odczytuje czy istnieją inputy od użytkownika
+        /// </summary>
         private void Update ()
         {
             // Store the value of both input axes
@@ -84,7 +84,9 @@ namespace Complete
             EngineAudio ();
         }
 
-
+        /// <summary>
+        /// Znienia dzwięk silnika
+        /// </summary>
         private void EngineAudio ()
         {
             // If there is no input 
@@ -112,7 +114,9 @@ namespace Complete
             }
         }
 
-
+        /// <summary>
+        /// Wywoluje funkcje(Zoom i update)
+        /// </summary>
         private void FixedUpdate ()
         {
             // Using movement and turning functions in fixed update
@@ -120,7 +124,9 @@ namespace Complete
             Turn ();
         }
 
-
+        /// <summary>
+        /// Zmienia pozyczę obiektu w zależności od inputów
+        /// </summary>
         private void Move ()
         {
             // Create a vector for moving tank using input values, speed, time and face it to right direction
@@ -130,7 +136,9 @@ namespace Complete
             m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
 
-
+        /// <summary>
+        /// Obraca obiekt dookola siebie
+        /// </summary>
         private void Turn ()
         {
             // Creating turn value

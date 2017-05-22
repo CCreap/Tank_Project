@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class BulletRotation : MonoBehaviour {
 
-
+    /// <summary>
+    /// Degree.
+    /// </summary>
 	public float x=27f;
 
-	
-	void Update () 
+    /// <summary>
+    /// Each frame rotate the shell relative to itself by x degrees.
+    /// </summary>
+    void Update () 
 	{
-		//Rotate the shell relative to itself by x degrees
+		
 		transform.Rotate (x * Time.deltaTime ,0f, 0f,relativeTo:Space.Self);
 	}
 }

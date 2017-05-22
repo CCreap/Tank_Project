@@ -21,7 +21,9 @@ namespace Complete
         private float m_CurrentHealth;                      // Tank's current health
         private bool m_Dead;                                // If tank has less then 0 health, then it's dead
 
-
+        /// <summary>
+        /// Ustawia na mampe deaktywowaną animacje wybuchu, żeby poten z niej skorzystać
+        /// </summary>
         private void Awake ()
         {
 			HealAudioSource.enabled = false;
@@ -35,7 +37,9 @@ namespace Complete
             m_ExplosionParticles.gameObject.SetActive (false);
         }
 
-
+        /// <summary>
+        /// Wlącza GUI i odświeża go.
+        /// </summary>
         private void OnEnable()
         {
             // When the tank is enabled, reset the tank's health, also he cant be dead
@@ -46,7 +50,11 @@ namespace Complete
             SetHealthUI();
         }
 
-
+        /// <summary>
+        /// Przyjmuje punkty uszkodzenia i odejmuje od punktów życia na punkty uszkodzenia
+        /// Odświeża GUI
+        /// </summary>
+        /// <param name="amount">Ilość punktów uszkodzenia</param>
         public void TakeDamage (float amount)
         {
             // Reduce current health by the amount of damage done
@@ -62,7 +70,9 @@ namespace Complete
             }
         }
 
-
+        /// <summary>
+        /// Odświeża GUI
+        /// </summary>
         private void SetHealthUI ()
         {
             // Set the slider's the same as health
@@ -72,7 +82,10 @@ namespace Complete
             m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
         }
 
-
+        /// <summary>
+        /// Przy śmierci ustawia obiekt nieaktywnym
+        /// Wlącza animacje wybuchu
+        /// </summary>
         private void OnDeath ()
         {
             //Make tank dead, so function could be called only once
@@ -93,6 +106,10 @@ namespace Complete
         }
 
 		//On trigger enter with an object with tag "Kit" heal the tank
+        /// <summary>
+        /// Przy dotykaniu do kitu zwiększa punkty życia na 25, lub do maksymalnego stanu
+        /// </summary>
+        /// <param name="kit">Przyjmuje obiekt z treigerem z tagiem 'Kit'</param>
 		void OnTriggerEnter(Collider kit)
 		{
 			//Bool to chek if object's tag is "Kit"

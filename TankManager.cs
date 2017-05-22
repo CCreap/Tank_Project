@@ -23,8 +23,12 @@ namespace Complete
         private TankMovement m_Movement;                        // Reference to tank's movement script, used to disable and enable control
         private TankShooting m_Shooting;                        // Reference to tank's shooting script, used to disable and enable shooting
         private GameObject m_CanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round
-
-
+       
+        /// <summary>
+        /// Zawiera w sobie kontrolę ustawieniami obiektu
+        /// Przypisuje numer każdemu obiektu dla otrzymania kontrolu
+        /// Zmienia kolor obiektu na wskazany
+        /// </summary>
         public void Setup ()
         {
             // Get references to the components
@@ -51,7 +55,10 @@ namespace Complete
         }
 
 
-        // Used during the phases of the game where the player shouldn't be able to control their tank
+        
+        /// <summary>
+        /// Wylącza scrypty ruchu
+        /// </summary>
         public void DisableControl ()
         {
             m_Movement.enabled = false;
@@ -61,7 +68,9 @@ namespace Complete
         }
 
 
-        // Used during the phases of the game where the player should be able to control their tank
+        /// <summary>
+        /// Wlącza skrypty ruchu
+        /// </summary>
         public void EnableControl ()
         {
             m_Movement.enabled = true;
@@ -71,7 +80,10 @@ namespace Complete
         }
 
 
-        // Used at the start of each round to put the tank into it's default state.
+       
+        /// <summary>
+        /// Resetuje obiekt i przesuwa go w 'SpawnPoint'
+        /// </summary>
         public void Reset ()
         {
             m_Instance.transform.position = m_SpawnPoint.position;

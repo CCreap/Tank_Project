@@ -13,6 +13,9 @@ public class HealthKit : MonoBehaviour
 		float y;
 		float z;
 
+        /// <summary>
+        /// Włącza się kiedy skrypt jest podłączony.
+        /// </summary>
 		void Start () 
 		{
 			//Getting values from object's current position
@@ -20,7 +23,10 @@ public class HealthKit : MonoBehaviour
 			 y = transform.position.y;
 			 z = transform.position.z;
 		}
-		
+
+		/// <summary>
+        /// Jest wywołany każdy frame. 
+        /// </summary>
 		void Update () 
 		{
 			//Turn object around itself by 30 degrees per second
